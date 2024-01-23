@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -46,9 +45,7 @@ int sumarMano(struct carta mano[], int numCartas) {
     }
 
     // Ajuste para ases
-    suma = ajustarPorAses(suma, numAses);
-
-    return suma;
+    return ajustarPorAses(suma, numAses);
 }
 
 // Función para mostrar una carta
@@ -56,9 +53,8 @@ void mostrarCarta(struct carta c) {
     printf("  %s de %s\n", c.valor, c.palo);
 }
 
-int main() {
-
-    // Inicialización del mazo
+// Función para inicializar el mazo y barajearlo
+void inicializarYBarajearMazo() {
     for (int i = 0; i < TOTAL_CARTAS; i++) {
         mazo[i].valor = valores[i % VALORES_CARTA];
         mazo[i].palo = palos[i / VALORES_CARTA];
@@ -67,7 +63,6 @@ int main() {
         if (i % VALORES_CARTA == VALORES_CARTA - 1) mazo[i].valorNumerico = 11;
     }
 
-    // Barajear el mazo
     srand(time(NULL));
     for (int i = 0; i < TOTAL_CARTAS; i++) {
         int j = rand() % TOTAL_CARTAS;
@@ -75,8 +70,13 @@ int main() {
         mazo[i] = mazo[j];
         mazo[j] = temp;
     }
+}
 
-    printf("¡Bienvenido al Blackjack!\n");
+int main() {
+    // Inicializar y barajear el mazo
+    inicializarYBarajearMazo();
+
+    printf("Bienvenido al Blackjack!\n");
 
     // Repartir las primeras dos cartas al jugador
     manoJugador[numCartasJugador++] = mazo[0];
@@ -90,7 +90,7 @@ int main() {
 
     // Turno del jugador para recibir más cartas
     while (sumaJugador < 21) {
-        printf("¿Quieres otra carta? (s/n): ");
+        printf("Quieres otra carta? (s/n): ");
         scanf(" %c", &eleccion);
 
         if (eleccion == 's' || eleccion == 'S') {
@@ -100,10 +100,6 @@ int main() {
             printf("Nueva carta:\n");
             mostrarCarta(manoJugador[numCartasJugador - 1]);
             printf("Suma total: %d\n", sumaJugador);
-
-            // Actualizar el valor numérico de la nueva carta en la mano del jugador
-            manoJugador[numCartasJugador - 1].valorNumerico = mazo[numCartasJugador - 1].valorNumerico;
-
         } else {
             break;
         }
@@ -120,5 +116,3 @@ int main() {
 
     return 0;
 }
-
-
