@@ -27,7 +27,7 @@ void initializeDeck() {
     for (int i = 0; i < TOTAL_CARDS; i++) {
         deck[i].value = values[i % CARD_VALUES];
         deck[i].suit = suits[i / CARD_VALUES];
-        deck[i].numericValue = (i % CARD_VALUES) + 1;
+        deck[i].numericValue = (i % CARD_VALUES) + 2;
         if (deck[i].numericValue > 10) deck[i].numericValue = 10;
         if (i % CARD_VALUES == CARD_VALUES - 1) deck[i].numericValue = 11;
     }
@@ -75,7 +75,7 @@ int main() {
         scanf(" %c", &choice);
 
         if (choice == 's' || choice == 'S') {
-            playerHand[numPlayerCards] = deck[numPlayerCards + 1];
+            playerHand[numPlayerCards] = deck[numPlayerCards +1];
             playerSum = sumHand(playerHand, ++numPlayerCards);
 
             printf("Nueva carta:\n");
